@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>Create New Product</title>
+    <title>Edit Product</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERd`knLPMO" crossorigin="anonymous">
 
@@ -18,17 +18,19 @@
 
 <div class="container">
 
-    <h3>Create New Product</h3>
+    <h3>Edit Product <span th:text="${product.productId}"></span></h3>
 
 
 
-    <form th:action="@{/product/create}" th:object="${product}" method="post">
+    <form th:action="@{/product/edit}" th:object="${product}" method="post">
+
+        <input th:field="*{productId}" type="hidden" id="idInput">
 
         <div class="form-group">
 
             <label for="nameInput">Name</label>
 
-            <input th:field="*{productName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter product' name">
+            <input th:field="*{productName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter new product name">
 
         </div>
 
@@ -36,7 +38,7 @@
 
             <label for="quantityInput">Quantity</label>
 
-            <input th:field="*{productQuantity}" type="number" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter product' quantity">
+            <input th:field="*{productQuantity}" type="number" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter new product quantity">
 
         </div>
 

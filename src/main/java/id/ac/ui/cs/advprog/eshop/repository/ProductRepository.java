@@ -6,21 +6,50 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class ProductRepository {
-    private static AtomicLong idCounter = new AtomicLong(1);
     private List<Product> productData = new ArrayList<>();
 
     public Product create(Product product) {
-        long id = idCounter.getAndIncrement();
-        product.setProductId(Long.toString(id));
         productData.add(product);
         return product;
     }
 
     public Iterator<Product> findAll() {
         return productData.iterator();
+    }
+
+    public Product edit(Product product) throws RuntimeException {
+        Product productFromRepo;
+        try {
+            productFromRepo = findOne(product.getProductId());
+        } catch (RuntimeException exception) {
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
+
+        productFromRepo.setProductName(product.getProductName());
+        productFromRepo.setProductQuantity(product.getProductQuantity());
+
+        return productFromRepo;
+    }
+
+    public Product findOne(String productId) throws RuntimeException {
+        boolean productIsFound = false;
+
+        Iterator<Product> productIterator = findAll();
+        Product product = null;
+        while (productIterator.hasNext()) {
+            product = productIterator.next();
+            if (product.getProductId().equals(productId)) {
+                productIsFound = true;
+                break;
+            }
+        }
+
+        if (!productIsFound)
+            throw new RuntimeException("No such product in repository");
+
+        return product;
     }
 }

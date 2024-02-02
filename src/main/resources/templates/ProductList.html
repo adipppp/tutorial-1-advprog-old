@@ -46,6 +46,12 @@
 
             <td th:text="${product.productQuantity}"></td>
 
+            <td>
+                <a th:href="@{/product/edit(productId=${product.productId})}">
+                    <button>Edit</button>
+                </a>
+            </td>
+
         </tr>
 
         </tbody>
