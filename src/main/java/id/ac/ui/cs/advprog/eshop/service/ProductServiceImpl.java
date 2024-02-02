@@ -8,15 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private static AtomicLong idCounter = new AtomicLong(1);
 
     @Autowired
     private ProductRepository productRepository;
 
     @Override
     public Product create(Product product) {
+        String productId = Long.toString(idCounter.getAndIncrement());
+        product.setProductId(productId);
         productRepository.create(product);
         return product;
     }
@@ -27,5 +31,27 @@ public class ProductServiceImpl implements ProductService {
         List<Product> allProduct = new ArrayList<>();
         productIterator.forEachRemaining(allProduct::add);
         return allProduct;
+    }
+
+    @Override
+    public Product findOne(String productId) throws RuntimeException {
+        Product product;
+        try {
+            product = productRepository.findOne(productId);
+        } catch (RuntimeException exception) {
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
+        return product;
+    }
+
+    @Override
+    public Product delete(Product product) throws RuntimeException {
+        Product productFromRepo;
+        try {
+            productFromRepo = productRepository.delete(product);
+        } catch (RuntimeException exception) {
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
+        return productFromRepo;
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 public interface ProductService {
     public Product create(Product product);
     public List<Product> findAll();
+    public Product findOne(String productId) throws RuntimeException;
+    public Product delete(Product product) throws RuntimeException;
 }
