@@ -46,6 +46,12 @@
 
             <td th:text="${product.productQuantity}"></td>
 
+            <td>
+                <a th:href="@{/product/delete(productId=*{product.productId})}">
+                    <button>Delete</button>
+                </a>
+            </td>
+
         </tr>
 
         </tbody>
