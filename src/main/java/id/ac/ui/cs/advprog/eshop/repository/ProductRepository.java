@@ -27,7 +27,7 @@ public class ProductRepository {
         Product product = null;
         while (productIterator.hasNext()) {
             product = productIterator.next();
-            if (product.getProductId().equals(productId)) {
+            if (productId.equals(product.getProductId())) {
                 productIsFound = true;
                 break;
             }

@@ -46,6 +46,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product delete(Product product) throws RuntimeException {
+        if (product.getProductId() == null)
+            throw new RuntimeException("Field Product.productId is null");
+
         Product productFromRepo;
         try {
             productFromRepo = productRepository.delete(product);

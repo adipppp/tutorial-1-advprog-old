@@ -18,17 +18,23 @@
 
 <div class="container">
 
-    <h3>Delete <span th:text="${product.productName}"></span>?</h3>
+    <h3>
+        Delete <span th:text="${product.productName}"></span> (x<span th:text="${product.productQuantity}"></span>)?
+    </h3>
 
+    <div class="d-flex">
+        <a th:href="@{/product/list}">
+            <button class="btn btn-primary mr-1">Back</button>
+        </a>
 
+        <form th:action="@{/product/delete}" th:object="${product}" method="post">
 
-    <form th:action="@{/product/delete}" th:object="${product}" method="post">
+            <input th:field="*{productId}" type="hidden" id="idInput">
 
-        <input th:field="*{productId}" type="hidden" id="idInput">
+            <button type="submit" class="btn btn-danger ml-1">Delete</button>
 
-        <button type="submit" class="btn btn-primary">Delete</button>
-
-    </form>
+        </form>
+    </div>
 
 </div>
 
