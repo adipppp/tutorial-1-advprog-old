@@ -27,11 +27,30 @@ public class ProductController {
 
     @PostMapping("/create")
     public String createProductPost(@ModelAttribute Product product, Model model) {
-        service.create(product);
+        try {
+            service.create(product);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+
+            String exceptionMessage = exception.getMessage();
+            switch (exceptionMessage) {
+                case "Field Product.productQuantity is less than 0":
+                    model.addAttribute("error", "Product quantity cannot be negative");
+                    break;
+                case "Field Product.productName has 0 length":
+                    model.addAttribute("error", "Product name should not be left empty");
+                    break;
+                case "Field Product.productName is null":
+                    model.addAttribute("error", "Request body is invalid");
+                    break;
+            }
+
+            return "createProduct";
+        }
+
         return "redirect:list";
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/list")
     public String productListPage(Model model) {
         List<Product> allProducts = service.findAll();
@@ -45,7 +64,8 @@ public class ProductController {
         try {
             product = service.findOne(productId);
         } catch (RuntimeException exception) {
-            throw new RuntimeException(exception.getMessage(), exception);
+            exception.printStackTrace();
+            return "redirect:list";
         }
         model.addAttribute("product", product);
         return "editProduct";
@@ -56,8 +76,30 @@ public class ProductController {
         try {
             service.edit(product);
         } catch (RuntimeException exception) {
-            throw new RuntimeException(exception.getMessage(), exception);
+            exception.printStackTrace();
+
+            String exceptionMessage = exception.getMessage();
+            switch (exceptionMessage) {
+                case "No such product in repository":
+                    model.addAttribute("error", "Invalid product ID");
+                    break;
+                case "Field Product.productQuantity is less than 0":
+                    model.addAttribute("error", "Product quantity cannot be negative");
+                    break;
+                case "Field Product.productName has 0 length":
+                    model.addAttribute("error", "Product name should not be left empty");
+                    break;
+                case "Field Product.productId has 0 length":
+                    model.addAttribute("error", "Invalid product ID");
+                    break;
+                case "Field Product.productId or Product.productName is null":
+                    model.addAttribute("error", "Request body is invalid");
+                    break;
+            }
+
+            return "editProduct";
         }
+
         return "redirect:list";
     }
 }
