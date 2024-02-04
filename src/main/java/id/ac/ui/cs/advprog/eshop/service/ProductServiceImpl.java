@@ -19,9 +19,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(Product product) {
+        String productName = product.getProductName();
+        int productQuantity = product.getProductQuantity();
+
+        if (productName == null)
+            throw new RuntimeException("Field Product.productName is null");
+        if (productName.length() == 0)
+            throw new RuntimeException("Field Product.productName has 0 length");
+        if (productQuantity < 0)
+            throw new RuntimeException("Field Product.productQuantity is less than 0");
+
         String productId = Long.toString(idCounter.getAndIncrement());
         product.setProductId(productId);
+
         productRepository.create(product);
+        
         return product;
     }
 
@@ -46,8 +58,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product delete(Product product) {
-        if (product.getProductId() == null)
+        String productId = product.getProductId();
+
+        if (productId == null)
             throw new RuntimeException("Field Product.productId is null");
+        if (productId.length() == 0)
+            throw new RuntimeException("Field Product.productId has 0 length");
 
         Product productFromRepo;
         try {
