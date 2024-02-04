@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findOne(String productId) throws RuntimeException {
+    public Product findOne(String productId) {
         Product product;
         try {
             product = productRepository.findOne(productId);
@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product delete(Product product) throws RuntimeException {
+    public Product delete(Product product) {
         if (product.getProductId() == null)
             throw new RuntimeException("Field Product.productId is null");
 

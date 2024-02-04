@@ -20,7 +20,7 @@ public class ProductRepository {
         return productData.iterator();
     }
     
-    public Product findOne(String productId) throws RuntimeException {
+    public Product findOne(String productId) {
         boolean productIsFound = false;
 
         Iterator<Product> productIterator = findAll();
@@ -39,7 +39,7 @@ public class ProductRepository {
         return product;
     }
 
-    public Product delete(Product product) throws RuntimeException {
+    public Product delete(Product product) {
         boolean productIsFound = false;
 
         Iterator<Product> productIterator = findAll();
