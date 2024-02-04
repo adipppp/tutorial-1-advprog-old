@@ -22,7 +22,7 @@
 
 
 
-    <form th:action="@{/product/edit}" th:object="${product}" method="post">
+    <form th:action="@{/product/edit}" th:object="${product}" method="post" id="edit-product-form">
 
         <input th:field="*{productId}" type="hidden" id="idInput">
 
@@ -42,9 +42,17 @@
 
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-
     </form>
+
+    <div class="d-flex">
+
+        <a th:href="@{/product/list}">
+            <button class="btn btn-light mr-1">Back</button>
+        </a>
+
+        <button type="submit" form="edit-product-form" class="btn btn-primary ml-1">Submit</button>
+
+    </div>
 
 </div>
 

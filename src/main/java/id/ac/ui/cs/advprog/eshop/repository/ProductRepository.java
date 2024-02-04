@@ -20,7 +20,7 @@ public class ProductRepository {
         return productData.iterator();
     }
 
-    public Product edit(Product product) throws RuntimeException {
+    public Product edit(Product product) {
         Product productFromRepo;
         try {
             productFromRepo = findOne(product.getProductId());
@@ -34,14 +34,14 @@ public class ProductRepository {
         return productFromRepo;
     }
 
-    public Product findOne(String productId) throws RuntimeException {
+    public Product findOne(String productId) {
         boolean productIsFound = false;
 
         Iterator<Product> productIterator = findAll();
         Product product = null;
         while (productIterator.hasNext()) {
             product = productIterator.next();
-            if (product.getProductId().equals(productId)) {
+            if (productId.equals(product.getProductId())) {
                 productIsFound = true;
                 break;
             }

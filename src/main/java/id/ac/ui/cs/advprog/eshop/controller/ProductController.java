@@ -44,8 +44,8 @@ public class ProductController {
         try {
             product = service.findOne(productId);
         } catch (RuntimeException exception) {
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            exception.printStackTrace();
+            return "redirect:list";
         }
         model.addAttribute("product", product);
         return "editProduct";
@@ -56,8 +56,7 @@ public class ProductController {
         try {
             service.edit(product);
         } catch (RuntimeException exception) {
-            throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            exception.printStackTrace();
         }
         return "redirect:list";
     }
