@@ -31,6 +31,7 @@ public class ProductController {
         return "redirect:list";
     }
 
+    @ExceptionHandler(Exception.class)
     @GetMapping("/list")
     public String productListPage(Model model) {
         List<Product> allProducts = service.findAll();
@@ -44,8 +45,7 @@ public class ProductController {
         try {
             product = service.findOne(productId);
         } catch (RuntimeException exception) {
-            exception.printStackTrace();
-            return "redirect:list";
+            throw new RuntimeException(exception.getMessage(), exception);
         }
         model.addAttribute("product", product);
         return "editProduct";
@@ -56,7 +56,7 @@ public class ProductController {
         try {
             service.edit(product);
         } catch (RuntimeException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException(exception.getMessage(), exception);
         }
         return "redirect:list";
     }
