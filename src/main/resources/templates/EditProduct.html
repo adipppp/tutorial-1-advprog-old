@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>Create New Product</title>
+    <title>Edit Product</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERd`knLPMO" crossorigin="anonymous">
 
@@ -18,17 +18,17 @@
 
 <div class="container">
 
-    <h3>Create New Product</h3>
+    <h3>Edit Product <span th:text="${productId}"></span></h3>
 
 
 
-    <form th:action="@{/product/create}" th:object="${product}" method="post" id="create-product-form">
+    <form th:action="@{'/product/edit/' + ${productId}}" th:object="${product}" method="post" id="edit-product-form">
 
         <div class="form-group">
 
             <label for="nameInput">Name</label>
 
-            <input th:field="*{productName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter product name" required>
+            <input th:field="*{productName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter new product name" required>
 
         </div>
 
@@ -36,7 +36,7 @@
 
             <label for="quantityInput">Quantity</label>
 
-            <input th:field="*{productQuantity}" type="number" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter product quantity" required>
+            <input th:field="*{productQuantity}" type="number" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter new product quantity" required>
 
         </div>
 
@@ -48,7 +48,7 @@
             <button class="btn btn-light mr-1">Back</button>
         </a>
 
-        <button type="submit" form="create-product-form" class="btn btn-primary ml-1">Submit</button>
+        <button type="submit" form="edit-product-form" class="btn btn-primary ml-1">Submit</button>
 
     </div>
 
