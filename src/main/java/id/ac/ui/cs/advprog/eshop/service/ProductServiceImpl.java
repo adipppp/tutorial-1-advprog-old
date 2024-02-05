@@ -51,8 +51,10 @@ public class ProductServiceImpl implements ProductService {
         String productName = product.getProductName();
         int productQuantity = product.getProductQuantity();
 
-        if (productId == null || productName == null)
-            throw new RuntimeException("Field Product.productId or Product.productName is null");
+        if (productId == null)
+            throw new RuntimeException("Field Product.productId is null");
+        if (productName == null)
+            throw new RuntimeException("Field Product.productName is null");
         if (productId.length() == 0)
             throw new RuntimeException("Field Product.productId has 0 length");
         if (productName.length() == 0)

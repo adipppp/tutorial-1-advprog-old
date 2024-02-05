@@ -22,9 +22,7 @@
 
 
 
-    <form th:action="@{/product/edit}" th:object="${product}" method="post" id="edit-product-form">
-
-        <input th:field="*{productId}" type="hidden" id="idInput">
+    <form th:action="@{'/product/edit/' + ${productId}}" th:object="${product}" method="post" id="edit-product-form">
 
         <div class="form-group">
 
