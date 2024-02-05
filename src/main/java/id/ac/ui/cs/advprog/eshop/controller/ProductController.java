@@ -126,4 +126,29 @@ public class ProductController {
 
         return "redirect:/product/list";
     }
+
+    @GetMapping({"/delete", "/delete/", "/delete/{productId}", "/delete/{productId}"})
+    public String deleteProductPage(Model model, @PathVariable(required=false) String productId) {
+        Product product;
+        try {
+            product = service.findOne(productId);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+            return "redirect:/product/list";
+        }
+        model.addAttribute("product", product);
+        return "deleteProduct";
+    }
+
+    @PostMapping({"/delete", "/delete/", "/delete/{productId}", "/delete/{productId}"})
+    public String deleteProductPost(Model model, @PathVariable(required=false) String productId, @ModelAttribute Product product, BindingResult result) {
+        product.setProductId(productId);
+        try {
+            service.delete(product);
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        }
+
+        return "redirect:/product/list";
+    }
 }

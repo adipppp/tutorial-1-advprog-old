@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
         product.setProductId(productId);
 
         productRepository.create(product);
-        
+
         return product;
     }
 
@@ -46,6 +46,43 @@ public class ProductServiceImpl implements ProductService {
         List<Product> allProduct = new ArrayList<>();
         productIterator.forEachRemaining(allProduct::add);
         return allProduct;
+    }
+
+    @Override
+    public Product findOne(String productId) {
+        if (productId == null)
+            throw new RuntimeException("productId is null");
+
+        Product product;
+        try {
+            product = productRepository.findOne(productId);
+        } catch (RuntimeException exception) {
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
+
+        return product;
+    }
+
+    @Override
+    public Product delete(Product product) {
+        if (product == null)
+            throw new RuntimeException("Product is null");
+
+        String productId = product.getProductId();
+
+        if (productId == null)
+            throw new RuntimeException("Field Product.productId is null");
+        if (productId.length() == 0)
+            throw new RuntimeException("Field Product.productId has 0 length");
+
+        Product productFromRepo;
+        try {
+            productFromRepo = productRepository.delete(product);
+        } catch (RuntimeException exception) {
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
+
+        return productFromRepo;
     }
 
     @Override
@@ -76,20 +113,5 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return productFromRepo;
-    }
-
-    @Override
-    public Product findOne(String productId) {
-        if (productId == null)
-            throw new RuntimeException("productId is null");
-
-        Product product;
-        try {
-            product = productRepository.findOne(productId);
-        } catch (RuntimeException exception) {
-            throw new RuntimeException(exception.getMessage(), exception);
-        }
-
-        return product;
     }
 }
