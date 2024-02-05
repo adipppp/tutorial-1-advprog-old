@@ -19,6 +19,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(Product product) {
+        if (product == null)
+            throw new RuntimeException("Product is null");
+
         String productName = product.getProductName();
         int productQuantity = product.getProductQuantity();
 
@@ -47,6 +50,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product edit(Product product) {
+        if (product == null)
+            throw new RuntimeException("Product is null");
+
         String productId = product.getProductId();
         String productName = product.getProductName();
         int productQuantity = product.getProductQuantity();
@@ -74,6 +80,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findOne(String productId) {
+        if (productId == null)
+            throw new RuntimeException("productId is null");
+
         Product product;
         try {
             product = productRepository.findOne(productId);

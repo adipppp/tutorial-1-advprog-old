@@ -119,7 +119,6 @@ public class ProductController {
                     messageToDisplay = "An unknown exception has occured";
             }
 
-            model.addAttribute("product", product);
             model.addAttribute("error", messageToDisplay);
 
             return "editProduct";
