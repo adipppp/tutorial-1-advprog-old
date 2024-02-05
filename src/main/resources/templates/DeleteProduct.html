@@ -27,9 +27,7 @@
             <button class="btn btn-white mr-1">Back</button>
         </a>
 
-        <form th:action="@{/product/delete}" th:object="${product}" method="post">
-
-            <input th:field="*{productId}" type="hidden" id="idInput">
+        <form th:action="@{'/product/delete/' + ${productId}}" th:object="${product}" method="post">
 
             <button type="submit" class="btn btn-danger ml-1">Delete</button>
 

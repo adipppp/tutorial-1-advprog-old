@@ -22,7 +22,7 @@
 
 
 
-    <form th:action="@{/product/create}" th:object="${product}" method="post">
+    <form th:action="@{/product/create}" th:object="${product}" method="post" id="create-product-form">
 
         <div class="form-group">
 
@@ -40,13 +40,21 @@
 
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-
-        <h3 th:if="${error}" style="color: #ff0000;">
-            ATTN: <span th:text="${error}"></span>
-        </h3>
-
     </form>
+
+    <div class="d-flex">
+
+        <a th:href="@{/product/list}">
+            <button class="btn btn-light mr-1">Back</button>
+        </a>
+
+        <button type="submit" form="create-product-form" class="btn btn-primary ml-1">Submit</button>
+
+    </div>
+
+    <h3 th:if="${error}" style="color: #ff0000;">
+        ATTN: <span th:text="${error}"></span>
+    </h3>
 
 </div>
 
