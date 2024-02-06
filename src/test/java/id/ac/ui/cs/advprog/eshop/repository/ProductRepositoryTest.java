@@ -65,4 +65,40 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
+    @Test
+    void testFindOne() {
+        Product product = new Product();
+        product.setProductId("46e4ce01-d7f8-4c50-811f-871ab409a05a");
+        product.setProductName("Sendal Mas Faiz");
+        product.setProductQuantity(2);
+        productRepository.create(product);
+
+        assertEquals(product, productRepository.findOne("46e4ce01-d7f8-4c50-811f-871ab409a05a"));
+    }
+
+    @Test
+    void testFindOneIfEmpty() {
+        Exception exception = assertThrows(RuntimeException.class, () ->
+            productRepository.findOne("46e4ce01-d7f8-4c50-811f-871ab409a05a"));
+        assertEquals("No such product in repository", exception.getMessage());
+    }
+
+    @Test
+    void testFindOneIfMoreThanOneProduct() {
+        Product product1 = new Product();
+        product1.setProductId("46e4ce01-d7f8-4c50-811f-871ab409a05a");
+        product1.setProductName("Sendal Mas Faiz");
+        product1.setProductQuantity(2);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("8418c357-32d1-4c14-8195-086f17ba1399");
+        product2.setProductName("Peci Mas Fuad");
+        product2.setProductQuantity(1);
+        productRepository.create(product2);
+
+        assertEquals(product1, productRepository.findOne("46e4ce01-d7f8-4c50-811f-871ab409a05a"));
+        assertEquals(product2, productRepository.findOne("8418c357-32d1-4c14-8195-086f17ba1399"));
+    }
 }
