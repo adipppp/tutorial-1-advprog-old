@@ -33,11 +33,12 @@ class CreateProductFunctionalTest {
     @BeforeEach
     void setupTest() {
         baseUrl = String.format("%s:%d", testBaseUrl, serverPort);
-        driver.get(baseUrl + "/product/create");
     }
 
     @Test
     void productList_isCorrect(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
         String productName = "Sendal Mas Faiz";
         int productQuantity = 2;
 
@@ -74,6 +75,8 @@ class CreateProductFunctionalTest {
 
     @Test
     void nullProductName_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
         int productQuantity = 2;
 
         WebElement quantityInput = driver.findElement(
@@ -86,7 +89,7 @@ class CreateProductFunctionalTest {
         quantityInput.sendKeys(Integer.toString(productQuantity));
         submitButton.click();
 
-        exceptionMessageElement = null;
+        WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
                 By.cssSelector(".container > h3:nth-child(4)"));
@@ -97,6 +100,8 @@ class CreateProductFunctionalTest {
 
     @Test
     void emptyProductName_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
         int productQuantity = 2;
 
         WebElement quantityInput = driver.findElement(
@@ -110,7 +115,7 @@ class CreateProductFunctionalTest {
         quantityInput.sendKeys(Integer.toString(productQuantity));
         submitButton.click();
 
-        exceptionMessageElement = null;
+        WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
                 By.cssSelector(".container > h3:nth-child(4)"));
@@ -121,6 +126,8 @@ class CreateProductFunctionalTest {
 
     @Test
     void negativeProductQuantity_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
         String productName = "Sendal Mas Faiz";
         int productQuantity = -1;
 
@@ -136,7 +143,7 @@ class CreateProductFunctionalTest {
         quantityInput.sendKeys(Integer.toString(productQuantity));
         submitButton.click();
 
-        exceptionMessageElement = null;
+        WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
                 By.cssSelector(".container > h3:nth-child(4)"));
@@ -147,6 +154,8 @@ class CreateProductFunctionalTest {
 
     @Test
     void nonNumberProductQuantity_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
         String productName = "Sendal Mas Faiz";
         String productQuantity = "abc";
 
@@ -164,7 +173,7 @@ class CreateProductFunctionalTest {
         quantityInput.sendKeys(productQuantity);
         submitButton.click();
 
-        exceptionMessageElement = null;
+        WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
                 By.cssSelector(".container > h3:nth-child(4)"));
