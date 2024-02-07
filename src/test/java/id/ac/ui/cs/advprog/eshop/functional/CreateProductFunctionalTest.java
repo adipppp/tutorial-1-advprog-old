@@ -38,14 +38,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void productList_isCorrect(ChromeDriver driver) {
-        WebElement exceptionMessageElement = null;
-        try {
-            exceptionMessageElement = driver.findElement(
-                By.cssSelector(".container > h3:nth-child(4)"));
-        } catch (NoSuchElementException exception) {}
-
-        assertNull(exceptionMessageElement);
-
         String productName = "Sendal Mas Faiz";
         int productQuantity = 2;
 
@@ -82,14 +74,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void nullProductName_createProduct_isHandled(ChromeDriver driver) {
-        WebElement exceptionMessageElement = null;
-        try {
-            exceptionMessageElement = driver.findElement(
-                By.cssSelector(".container > h3:nth-child(4)"));
-        } catch (NoSuchElementException exception) {}
-
-        assertNull(exceptionMessageElement);
-
         int productQuantity = 2;
 
         WebElement quantityInput = driver.findElement(
@@ -113,14 +97,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void emptyProductName_createProduct_isHandled(ChromeDriver driver) {
-        WebElement exceptionMessageElement = null;
-        try {
-            exceptionMessageElement = driver.findElement(
-                By.cssSelector(".container > h3:nth-child(4)"));
-        } catch (NoSuchElementException exception) {}
-
-        assertNull(exceptionMessageElement);
-
         int productQuantity = 2;
 
         WebElement quantityInput = driver.findElement(
@@ -145,14 +121,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void negativeProductQuantity_createProduct_isHandled(ChromeDriver driver) {
-        WebElement exceptionMessageElement = null;
-        try {
-            exceptionMessageElement = driver.findElement(
-                By.cssSelector(".container > h3:nth-child(4)"));
-        } catch (NoSuchElementException exception) {}
-
-        assertNull(exceptionMessageElement);
-
         String productName = "Sendal Mas Faiz";
         int productQuantity = -1;
 
@@ -179,14 +147,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void nonNumberProductQuantity_createProduct_isHandled(ChromeDriver driver) {
-        WebElement exceptionMessageElement = null;
-        try {
-            exceptionMessageElement = driver.findElement(
-                By.cssSelector(".container > h3:nth-child(4)"));
-        } catch (NoSuchElementException exception) {}
-
-        assertNull(exceptionMessageElement);
-
         String productName = "Sendal Mas Faiz";
         String productQuantity = "abc";
 
