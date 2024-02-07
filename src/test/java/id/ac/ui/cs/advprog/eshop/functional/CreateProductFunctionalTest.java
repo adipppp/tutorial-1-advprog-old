@@ -33,12 +33,11 @@ class CreateProductFunctionalTest {
     @BeforeEach
     void setupTest() {
         baseUrl = String.format("%s:%d", testBaseUrl, serverPort);
+        driver.get(baseUrl + "/product/create");
     }
 
     @Test
     void productList_isCorrect(ChromeDriver driver) {
-        driver.get(baseUrl + "/product/create");
-
         WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
@@ -83,8 +82,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void nullProductName_createProduct_isHandled(ChromeDriver driver) {
-        driver.get(baseUrl + "/product/create");
-
         WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
@@ -116,8 +113,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void emptyProductName_createProduct_isHandled(ChromeDriver driver) {
-        driver.get(baseUrl + "/product/create");
-
         WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
@@ -150,8 +145,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void negativeProductQuantity_createProduct_isHandled(ChromeDriver driver) {
-        driver.get(baseUrl + "/product/create");
-
         WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
@@ -186,8 +179,6 @@ class CreateProductFunctionalTest {
 
     @Test
     void nonNumberProductQuantity_createProduct_isHandled(ChromeDriver driver) {
-        driver.get(baseUrl + "/product/create");
-
         WebElement exceptionMessageElement = null;
         try {
             exceptionMessageElement = driver.findElement(
