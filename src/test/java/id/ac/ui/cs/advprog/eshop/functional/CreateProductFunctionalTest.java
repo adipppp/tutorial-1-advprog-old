@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -35,17 +37,30 @@ class CreateProductFunctionalTest {
 
     @Test
     void productList_isCorrect(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
+        WebElement exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNull(exceptionMessageElement);
+
         String productName = "Sendal Mas Faiz";
         int productQuantity = 2;
 
-        driver.get(baseUrl + "/product/create");
+        WebElement nameInput = driver.findElement(
+            By.id("nameInput"));
+        WebElement quantityInput = driver.findElement(
+            By.id("quantityInput"));
+        WebElement submitButton = driver.findElement(
+            By.cssSelector("button.btn:nth-child(2)"));
 
-        driver.findElement(
-            By.cssSelector("#nameInput")).sendKeys(productName);
-        driver.findElement(
-            By.cssSelector("#quantityInput")).sendKeys(Integer.toString(productQuantity));
-        driver.findElement(
-            By.cssSelector(".btn")).click();
+        nameInput.sendKeys(productName);
+        quantityInput.clear();
+        quantityInput.sendKeys(Integer.toString(productQuantity));
+        submitButton.click();
 
         WebElement productNameElement = null;
         WebElement productQuantityElement = null;
@@ -64,5 +79,146 @@ class CreateProductFunctionalTest {
 
         assertEquals(productName, productNameInPage);
         assertEquals(productQuantity, productQuantityInPage);
+    }
+
+    @Test
+    void nullProductName_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
+        WebElement exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNull(exceptionMessageElement);
+
+        int productQuantity = 2;
+
+        WebElement quantityInput = driver.findElement(
+            By.id("quantityInput"));
+        WebElement submitButton = driver.findElement(
+            By.cssSelector("button.btn:nth-child(2)"));
+
+        driver.executeScript("document.getElementById('nameInput').remove();");
+        quantityInput.clear();
+        quantityInput.sendKeys(Integer.toString(productQuantity));
+        submitButton.click();
+
+        exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNotNull(exceptionMessageElement);
+    }
+
+    @Test
+    void emptyProductName_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
+        WebElement exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNull(exceptionMessageElement);
+
+        int productQuantity = 2;
+
+        WebElement quantityInput = driver.findElement(
+            By.id("quantityInput"));
+        WebElement submitButton = driver.findElement(
+            By.cssSelector("button.btn:nth-child(2)"));
+
+        driver.executeScript(
+            "document.getElementById('nameInput').removeAttribute('required');");
+        quantityInput.clear();
+        quantityInput.sendKeys(Integer.toString(productQuantity));
+        submitButton.click();
+
+        exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNotNull(exceptionMessageElement);
+    }
+
+    @Test
+    void negativeProductQuantity_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
+        WebElement exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNull(exceptionMessageElement);
+
+        String productName = "Sendal Mas Faiz";
+        int productQuantity = -1;
+
+        WebElement nameInput = driver.findElement(
+            By.id("nameInput"));
+        WebElement quantityInput = driver.findElement(
+            By.id("quantityInput"));
+        WebElement submitButton = driver.findElement(
+            By.cssSelector("button.btn:nth-child(2)"));
+
+        nameInput.sendKeys(productName);
+        quantityInput.clear();
+        quantityInput.sendKeys(Integer.toString(productQuantity));
+        submitButton.click();
+
+        exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNotNull(exceptionMessageElement);
+    }
+
+    @Test
+    void nonNumberProductQuantity_createProduct_isHandled(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/create");
+
+        WebElement exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNull(exceptionMessageElement);
+
+        String productName = "Sendal Mas Faiz";
+        String productQuantity = "abc";
+
+        WebElement nameInput = driver.findElement(
+            By.id("nameInput"));
+        WebElement quantityInput = driver.findElement(
+            By.id("quantityInput"));
+        WebElement submitButton = driver.findElement(
+            By.cssSelector("button.btn:nth-child(2)"));
+        
+        nameInput.sendKeys(productName);
+        driver.executeScript(
+            "document.getElementById('quantityInput').setAttribute('type', 'text')");
+        quantityInput.clear();
+        quantityInput.sendKeys(productQuantity);
+        submitButton.click();
+
+        exceptionMessageElement = null;
+        try {
+            exceptionMessageElement = driver.findElement(
+                By.cssSelector(".container > h3:nth-child(4)"));
+        } catch (NoSuchElementException exception) {}
+
+        assertNotNull(exceptionMessageElement);
     }
 }
